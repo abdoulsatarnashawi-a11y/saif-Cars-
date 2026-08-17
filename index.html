@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saif Cars | سيارات سيف</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #38bdf8; }
+    nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-right: 1.5rem;
+      font-size: 0.95rem;
+    }
+    nav a:hover { color: #38bdf8; }
+    .hero {
+      text-align: center;
+      padding: 5rem 1.5rem 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .hero p {
+      color: #94a3b8;
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .cta {
+      display: inline-block;
+      background: #38bdf8;
+      color: #0f172a;
+      padding: 0.85rem 2rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: rgba(56, 189, 248, 0.4); }
+    .card h3 { color: #38bdf8; margin-bottom: 0.5rem; }
+    .card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #64748b;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Saif Cars</div>
+    <nav>
+      <a href="#services">خدماتنا</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>أفضل السيارات بأفضل الأسعار</h1>
+    <p>مرحباً بكم في Saif Cars — منصتكم لبيع وشراء السيارات بثقة وسهولة.</p>
+    <a class="cta" href="#contact">ابدأ الآن</a>
+  </section>
+
+  <section class="cards" id="services">
+    <div class="card">
+      <h3>🚗 بيع وشراء</h3>
+      <p>اعرض سيارتك للبيع أو تصفّح مجموعة واسعة من السيارات المتاحة.</p>
+    </div>
+    <div class="card">
+      <h3>✅ فحص موثوق</h3>
+      <p>جميع السيارات تخضع لفحص شامل قبل العرض لضمان الجودة.</p>
+    </div>
+    <div class="card">
+      <h3>💳 تمويل مرن</h3>
+      <p>خيارات تمويل متعددة تناسب ميزانيتك واحتياجاتك.</p>
+    </div>
+  </section>
+
+  <footer id="contact">
+    &copy; 2026 Saif Cars — جميع الحقوق محفوظة
+  </footer>
+</body>
+</html>
