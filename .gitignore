@@ -1,0 +1,5 @@
+node_modules/
+saifcars.db
+saifcars.db-wal
+saifcars.db-shm
+.env

@@ -12,9 +12,15 @@
       <a href="#" class="logo" onclick="goHome(); return false;">Saif<span>Cars</span></a>
       <nav class="nav-links">
         <a href="#" class="active" onclick="goHome(); return false;">Brands</a>
-        <a href="#" onclick="document.getElementById('view-listings-btn').click(); return false;">Inventory</a>
+        <a href="#" onclick="viewAllListings(); return false;">Inventory</a>
+        <a href="#" id="nav-favorites" class="hidden" onclick="viewFavorites(); return false;">Favorites</a>
         <a href="#contact">Contact</a>
       </nav>
+      <div class="auth-actions">
+        <span id="user-greeting" class="user-greeting hidden"></span>
+        <button id="login-btn" class="btn btn-secondary btn-sm" type="button">Sign In</button>
+        <button id="logout-btn" class="btn btn-secondary btn-sm hidden" type="button">Sign Out</button>
+      </div>
     </div>
   </header>
 
@@ -23,8 +29,8 @@
       <div>
         <h1>Find Your Perfect Car</h1>
         <p>
-          Explore a dynamic catalog of global automotive brands and models.
-          Search, filter, and browse live inventory listings instantly.
+          Explore a dynamic catalog with real photos, live inventory from our database,
+          and save favorites when you sign in.
         </p>
       </div>
       <div class="stats-grid">
@@ -51,7 +57,7 @@
       <input id="filter-max-price" type="number" placeholder="Max price" min="0" step="1000">
     </section>
 
-    <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom: 0.5rem;">
+    <div class="toolbar-actions">
       <select id="filter-sort" aria-label="Sort listings">
         <option value="price-asc">Price: Low to High</option>
         <option value="price-desc">Price: High to Low</option>
@@ -99,12 +105,44 @@
   </footer>
 
   <div id="listing-modal" class="modal-overlay" role="dialog" aria-modal="true">
-    <div class="modal">
+    <div class="modal modal-lg">
       <div class="modal-header">
         <h3 id="modal-title">Vehicle Details</h3>
         <button id="modal-overlay-close" class="modal-close" type="button" aria-label="Close">&times;</button>
       </div>
       <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="auth-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="auth-modal-title">Sign In</h3>
+        <button id="auth-modal-close" class="modal-close" type="button" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="auth-tabs">
+          <button id="tab-login" class="auth-tab active" type="button">Sign In</button>
+          <button id="tab-register" class="auth-tab" type="button">Register</button>
+        </div>
+        <form id="auth-form">
+          <div id="name-field" class="form-field hidden">
+            <label for="auth-name">Full Name</label>
+            <input id="auth-name" type="text" autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label for="auth-email">Email</label>
+            <input id="auth-email" type="email" required autocomplete="email">
+          </div>
+          <div class="form-field">
+            <label for="auth-password">Password</label>
+            <input id="auth-password" type="password" required minlength="6" autocomplete="current-password">
+          </div>
+          <p id="auth-error" class="form-error hidden"></p>
+          <button class="btn btn-primary" type="submit" style="width:100%; margin-top: 0.5rem;">Continue</button>
+        </form>
+        <p class="demo-hint">Demo account: <strong>demo@saifcars.com</strong> / <strong>demo1234</strong></p>
+      </div>
     </div>
   </div>
 

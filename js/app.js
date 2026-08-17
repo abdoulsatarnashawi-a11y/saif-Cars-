@@ -1,9 +1,15 @@
 const state = {
   brands: [],
   listings: [],
+  categories: [],
+  user: null,
+  token: localStorage.getItem("saif_token"),
   view: "brands",
+  favoritesMode: false,
   selectedBrand: null,
   selectedModel: null,
+  activeListing: null,
+  authMode: "login",
   filters: {
     search: "",
     brand: "",
@@ -14,47 +20,14 @@ const state = {
   },
 };
 
-const COLORS = [
-  "White", "Black", "Silver", "Gray", "Blue", "Red",
-  "Green", "Brown", "Beige", "Orange", "Yellow", "Gold",
-];
-
-const TRANSMISSIONS = ["Automatic", "Manual", "CVT", "Dual-Clutch"];
-const FUEL_TYPES = ["Gasoline", "Diesel", "Hybrid", "Electric", "Plug-in Hybrid"];
-const TRIMS = ["Base", "Sport", "Premium", "Limited", "Platinum", "Touring"];
-
 const CATEGORY_ICONS = {
-  Sedan: "🚗",
-  SUV: "🚙",
-  Truck: "🛻",
-  Sports: "🏎️",
-  Electric: "⚡",
-  Hybrid: "🔋",
-  Hatchback: "🚘",
-  Van: "🚐",
-  Wagon: "🚐",
-  Coupe: "🏁",
-  Convertible: "🌤️",
+  Sedan: "🚗", SUV: "🚙", Truck: "🛻", Sports: "🏎️", Electric: "⚡",
+  Hybrid: "🔋", Hatchback: "🚘", Van: "🚐", Wagon: "🚐", Coupe: "🏁", Convertible: "🌤️",
 };
-
-function hashCode(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i += 1) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash);
-}
-
-function pick(arr, seed) {
-  return arr[seed % arr.length];
-}
 
 function formatPrice(value) {
   return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
+    style: "currency", currency: "USD", maximumFractionDigits: 0,
   }).format(value);
 }
 
@@ -62,72 +35,99 @@ function formatMileage(value) {
   return new Intl.NumberFormat("en-US").format(value) + " mi";
 }
 
-function getBasePrice(category) {
-  const ranges = {
-    Sedan: [18000, 45000],
-    SUV: [25000, 75000],
-    Truck: [28000, 80000],
-    Sports: [35000, 250000],
-    Electric: [32000, 120000],
-    Hybrid: [24000, 55000],
-    Hatchback: [16000, 32000],
-    Van: [30000, 65000],
-    Wagon: [28000, 60000],
-    Coupe: [30000, 90000],
-    Convertible: [35000, 110000],
-  };
-  return ranges[category] || [20000, 50000];
+async function api(path, options = {}) {
+  const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+  if (state.token) headers.Authorization = `Bearer ${state.token}`;
+
+  const res = await fetch(path, { ...options, headers });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Request failed");
+  return data;
 }
 
-function generateListings(brands) {
-  const listings = [];
-
-  brands.forEach((brand) => {
-    brand.models.forEach((model) => {
-      const seed = hashCode(`${brand.id}-${model.id}`);
-      const count = 1 + (seed % 3);
-      const [min, max] = getBasePrice(model.category);
-
-      for (let i = 0; i < count; i += 1) {
-        const itemSeed = seed + i * 997;
-        const year = 2018 + (itemSeed % 8);
-        const price = min + (itemSeed % (max - min));
-        const mileage = 5000 + (itemSeed % 95000);
-        const listingId = `${brand.id}-${model.id}-${i}`;
-
-        listings.push({
-          id: listingId,
-          brandId: brand.id,
-          brandName: brand.name,
-          modelId: model.id,
-          modelName: model.name,
-          category: model.category,
-          year,
-          price,
-          mileage,
-          color: pick(COLORS, itemSeed),
-          transmission: pick(TRANSMISSIONS, itemSeed >> 2),
-          fuel: model.category === "Electric"
-            ? "Electric"
-            : model.category === "Hybrid"
-              ? "Hybrid"
-              : pick(FUEL_TYPES, itemSeed >> 3),
-          trim: pick(TRIMS, itemSeed >> 4),
-          country: brand.country,
-        });
-      }
-    });
-  });
-
-  return listings;
+function setAuth(token, user) {
+  state.token = token;
+  state.user = user;
+  if (token) {
+    localStorage.setItem("saif_token", token);
+  } else {
+    localStorage.removeItem("saif_token");
+  }
+  renderAuthUI();
 }
 
-function getCategories() {
-  const set = new Set();
-  state.brands.forEach((brand) => {
-    brand.models.forEach((model) => set.add(model.category));
-  });
-  return [...set].sort();
+function renderAuthUI() {
+  const loginBtn = document.getElementById("login-btn");
+  const logoutBtn = document.getElementById("logout-btn");
+  const greeting = document.getElementById("user-greeting");
+  const favNav = document.getElementById("nav-favorites");
+
+  if (state.user) {
+    loginBtn.classList.add("hidden");
+    logoutBtn.classList.remove("hidden");
+    greeting.textContent = `Hi, ${state.user.name.split(" ")[0]}`;
+    greeting.classList.remove("hidden");
+    favNav.classList.remove("hidden");
+  } else {
+    loginBtn.classList.remove("hidden");
+    logoutBtn.classList.add("hidden");
+    greeting.classList.add("hidden");
+    favNav.classList.add("hidden");
+  }
+}
+
+function openAuthModal(mode = "login") {
+  state.authMode = mode;
+  document.getElementById("auth-modal-title").textContent = mode === "login" ? "Sign In" : "Create Account";
+  document.getElementById("tab-login").classList.toggle("active", mode === "login");
+  document.getElementById("tab-register").classList.toggle("active", mode === "register");
+  document.getElementById("name-field").classList.toggle("hidden", mode === "login");
+  document.getElementById("auth-error").classList.add("hidden");
+  document.getElementById("auth-form").reset();
+  document.getElementById("auth-modal").classList.add("open");
+}
+
+function closeAuthModal() {
+  document.getElementById("auth-modal").classList.remove("open");
+}
+
+async function loadStats() {
+  const stats = await api("/api/stats");
+  document.getElementById("stat-brands").textContent = stats.brands;
+  document.getElementById("stat-models").textContent = stats.models;
+  document.getElementById("stat-listings").textContent = stats.listings;
+}
+
+async function loadBrands() {
+  const data = await api("/api/brands");
+  state.brands = data.brands;
+}
+
+async function loadCategories() {
+  const data = await api("/api/categories");
+  state.categories = data.categories;
+}
+
+async function loadListings() {
+  const params = new URLSearchParams();
+  const { search, brand, category, minPrice, maxPrice, sort } = state.filters;
+
+  if (state.selectedBrand) params.set("brand", state.selectedBrand.id);
+  if (state.selectedModel) params.set("model", state.selectedModel.id);
+  if (brand) params.set("brand", brand);
+  if (category) params.set("category", category);
+  if (minPrice) params.set("minPrice", minPrice);
+  if (maxPrice) params.set("maxPrice", maxPrice);
+  if (search.trim()) params.set("search", search.trim());
+  params.set("sort", sort);
+
+  const data = await api(`/api/listings?${params.toString()}`);
+  state.listings = data.listings;
+}
+
+async function loadFavorites() {
+  const data = await api("/api/favorites");
+  state.listings = data.listings;
 }
 
 function getFilteredBrands() {
@@ -138,10 +138,8 @@ function getFilteredBrands() {
     if (brand && item.id !== brand) return false;
     if (category && !item.models.some((m) => m.category === category)) return false;
     if (!q) return true;
-
-    const inBrand = item.name.toLowerCase().includes(q);
-    const inModels = item.models.some((m) => m.name.toLowerCase().includes(q));
-    return inBrand || inModels;
+    return item.name.toLowerCase().includes(q) ||
+      item.models.some((m) => m.name.toLowerCase().includes(q));
   });
 }
 
@@ -153,147 +151,166 @@ function getFilteredModels() {
   return state.selectedBrand.models.filter((model) => {
     if (category && model.category !== category) return false;
     if (!q) return true;
-    return (
-      model.name.toLowerCase().includes(q) ||
-      state.selectedBrand.name.toLowerCase().includes(q)
-    );
+    return model.name.toLowerCase().includes(q) ||
+      state.selectedBrand.name.toLowerCase().includes(q);
   });
-}
-
-function getFilteredListings() {
-  const { search, brand, category, minPrice, maxPrice, sort } = state.filters;
-  const q = search.trim().toLowerCase();
-  let results = [...state.listings];
-
-  if (state.selectedBrand) {
-    results = results.filter((l) => l.brandId === state.selectedBrand.id);
-  }
-  if (state.selectedModel) {
-    results = results.filter(
-      (l) => l.modelId === state.selectedModel.id && l.brandId === state.selectedBrand.id
-    );
-  }
-  if (brand) results = results.filter((l) => l.brandId === brand);
-  if (category) results = results.filter((l) => l.category === category);
-  if (minPrice) results = results.filter((l) => l.price >= Number(minPrice));
-  if (maxPrice) results = results.filter((l) => l.price <= Number(maxPrice));
-
-  if (q) {
-    results = results.filter((l) => {
-      const haystack = [
-        l.brandName,
-        l.modelName,
-        l.category,
-        l.color,
-        l.trim,
-        String(l.year),
-      ].join(" ").toLowerCase();
-      return haystack.includes(q);
-    });
-  }
-
-  switch (sort) {
-    case "price-desc":
-      results.sort((a, b) => b.price - a.price);
-      break;
-    case "year-desc":
-      results.sort((a, b) => b.year - a.year);
-      break;
-    case "mileage-asc":
-      results.sort((a, b) => a.mileage - b.mileage);
-      break;
-    default:
-      results.sort((a, b) => a.price - b.price);
-  }
-
-  return results;
-}
-
-function setView(view) {
-  state.view = view;
-  render();
-}
-
-function selectBrand(brandId) {
-  state.selectedBrand = state.brands.find((b) => b.id === brandId) || null;
-  state.selectedModel = null;
-  state.view = "models";
-  render();
-}
-
-function selectModel(modelId) {
-  if (!state.selectedBrand) return;
-  state.selectedModel = state.selectedBrand.models.find((m) => m.id === modelId) || null;
-  state.view = "listings";
-  render();
 }
 
 function goHome() {
   state.selectedBrand = null;
   state.selectedModel = null;
+  state.favoritesMode = false;
   state.view = "brands";
-  render();
+  refresh();
 }
 
 function goToBrands() {
   state.selectedModel = null;
+  state.favoritesMode = false;
   state.view = state.selectedBrand ? "models" : "brands";
-  render();
+  refresh();
 }
 
-function openListingModal(listingId) {
-  const listing = state.listings.find((l) => l.id === listingId);
-  if (!listing) return;
+function selectBrand(brandId) {
+  state.selectedBrand = state.brands.find((b) => b.id === brandId) || null;
+  state.selectedModel = null;
+  state.favoritesMode = false;
+  state.view = "models";
+  refresh();
+}
 
-  document.getElementById("modal-title").textContent =
-    `${listing.year} ${listing.brandName} ${listing.modelName}`;
-  document.getElementById("modal-body").innerHTML = `
-    <p style="color: var(--muted); margin-bottom: 0.5rem;">
-      ${listing.trim} trim · ${listing.color} · ${listing.country}
-    </p>
-    <div class="price" style="font-size: 1.5rem; margin-bottom: 1rem;">${formatPrice(listing.price)}</div>
-    <div class="detail-grid">
-      <div class="detail-item"><span>Year</span><strong>${listing.year}</strong></div>
-      <div class="detail-item"><span>Mileage</span><strong>${formatMileage(listing.mileage)}</strong></div>
-      <div class="detail-item"><span>Category</span><strong>${listing.category}</strong></div>
-      <div class="detail-item"><span>Transmission</span><strong>${listing.transmission}</strong></div>
-      <div class="detail-item"><span>Fuel Type</span><strong>${listing.fuel}</strong></div>
-      <div class="detail-item"><span>Listing ID</span><strong>${listing.id}</strong></div>
-    </div>
-    <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-      <button class="btn btn-primary" onclick="alert('Contact request sent for ${listing.brandName} ${listing.modelName}!')">Contact Dealer</button>
-      <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-    </div>
-  `;
+function selectModel(modelId) {
+  if (!state.selectedBrand) return;
+  state.selectedModel = state.selectedBrand.models.find((m) => m.id === modelId) || null;
+  state.favoritesMode = false;
+  state.view = "listings";
+  refresh();
+}
 
-  document.getElementById("listing-modal").classList.add("open");
+function viewAllListings() {
+  state.selectedBrand = null;
+  state.selectedModel = null;
+  state.favoritesMode = false;
+  state.view = "listings";
+  refresh();
+}
+
+function viewFavorites() {
+  if (!state.user) {
+    openAuthModal("login");
+    return;
+  }
+  state.favoritesMode = true;
+  state.view = "listings";
+  refresh();
+}
+
+async function openListingModal(listingId) {
+  try {
+    const data = await api(`/api/listings/${listingId}`);
+    state.activeListing = data.listing;
+    const listing = data.listing;
+
+    document.getElementById("modal-title").textContent =
+      `${listing.year} ${listing.brandName} ${listing.modelName}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <img class="modal-image" src="${listing.imageUrl}" alt="${listing.brandName} ${listing.modelName}">
+      <p class="modal-subtitle">${listing.trim} trim · ${listing.color} · ${listing.country}</p>
+      <div class="price modal-price">${formatPrice(listing.price)}</div>
+      <p style="color: var(--muted); margin-bottom: 1rem;">${listing.description}</p>
+      <div class="detail-grid">
+        <div class="detail-item"><span>Year</span><strong>${listing.year}</strong></div>
+        <div class="detail-item"><span>Mileage</span><strong>${formatMileage(listing.mileage)}</strong></div>
+        <div class="detail-item"><span>Category</span><strong>${listing.category}</strong></div>
+        <div class="detail-item"><span>Transmission</span><strong>${listing.transmission}</strong></div>
+        <div class="detail-item"><span>Fuel Type</span><strong>${listing.fuel}</strong></div>
+        <div class="detail-item"><span>Listing ID</span><strong>${listing.id}</strong></div>
+      </div>
+      <textarea id="inquiry-message" class="inquiry-input" placeholder="Write your message to the dealer..." rows="3"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-primary" type="button" onclick="sendInquiry()">Contact Dealer</button>
+        <button class="btn btn-secondary" type="button" onclick="toggleFavorite()">
+          ${listing.isFavorite ? "♥ Saved" : "♡ Save"}
+        </button>
+        <button class="btn btn-secondary" type="button" onclick="closeModal()">Close</button>
+      </div>
+    `;
+
+    document.getElementById("listing-modal").classList.add("open");
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
 function closeModal() {
   document.getElementById("listing-modal").classList.remove("open");
+  state.activeListing = null;
 }
 
-function renderStats() {
-  const brandCount = state.brands.length;
-  const modelCount = state.brands.reduce((sum, b) => sum + b.models.length, 0);
-  document.getElementById("stat-brands").textContent = brandCount;
-  document.getElementById("stat-models").textContent = modelCount;
-  document.getElementById("stat-listings").textContent = state.listings.length;
+async function sendInquiry() {
+  if (!state.user) {
+    closeModal();
+    openAuthModal("login");
+    return;
+  }
+
+  const message = document.getElementById("inquiry-message")?.value?.trim();
+  if (!message) {
+    alert("Please write a message first.");
+    return;
+  }
+
+  try {
+    await api(`/api/listings/${state.activeListing.id}/inquire`, {
+      method: "POST",
+      body: JSON.stringify({ message }),
+    });
+    alert("Your inquiry was sent successfully!");
+    closeModal();
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+async function toggleFavorite() {
+  if (!state.user) {
+    closeModal();
+    openAuthModal("login");
+    return;
+  }
+
+  const listing = state.activeListing;
+  try {
+    if (listing.isFavorite) {
+      await api(`/api/listings/${listing.id}/favorite`, { method: "DELETE" });
+      listing.isFavorite = false;
+    } else {
+      await api(`/api/listings/${listing.id}/favorite`, { method: "POST" });
+      listing.isFavorite = true;
+    }
+    await refresh();
+    openListingModal(listing.id);
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
 function renderBreadcrumb() {
   const el = document.getElementById("breadcrumb");
   const parts = [`<button type="button" onclick="goHome()">All Brands</button>`];
 
-  if (state.selectedBrand) {
-    parts.push("<span>/</span>");
-    parts.push(
-      `<button type="button" onclick="goToBrands()">${state.selectedBrand.name}</button>`
-    );
-  }
-  if (state.selectedModel) {
-    parts.push("<span>/</span>");
-    parts.push(`<span>${state.selectedModel.name}</span>`);
+  if (state.favoritesMode) {
+    parts.push("<span>/</span><span>Favorites</span>");
+  } else {
+    if (state.selectedBrand) {
+      parts.push("<span>/</span>");
+      parts.push(`<button type="button" onclick="goToBrands()">${state.selectedBrand.name}</button>`);
+    }
+    if (state.selectedModel) {
+      parts.push("<span>/</span>");
+      parts.push(`<span>${state.selectedModel.name}</span>`);
+    }
   }
 
   el.innerHTML = parts.join("");
@@ -310,7 +327,7 @@ function renderBrands() {
 
   container.innerHTML = brands.map((brand) => `
     <article class="brand-card" onclick="selectBrand('${brand.id}')">
-      <div class="initial">${brand.name.charAt(0)}</div>
+      <img class="brand-logo" src="${brand.logoUrl}" alt="${brand.name}" loading="lazy">
       <h3>${brand.name}</h3>
       <p>${brand.models.length} models · ${brand.country}</p>
     </article>
@@ -327,16 +344,12 @@ function renderModels() {
   }
 
   container.innerHTML = models.map((model) => {
-    const count = state.listings.filter(
-      (l) => l.brandId === state.selectedBrand.id && l.modelId === model.id
-    ).length;
     const icon = CATEGORY_ICONS[model.category] || "🚗";
-
     return `
       <article class="model-card" onclick="selectModel('${model.id}')">
         <span class="category">${model.category}</span>
         <h3>${icon} ${model.name}</h3>
-        <p>${count} listing${count === 1 ? "" : "s"} available</p>
+        <p>View available listings</p>
       </article>
     `;
   }).join("");
@@ -344,61 +357,57 @@ function renderModels() {
 
 function renderListings() {
   const container = document.getElementById("listings-grid");
-  const listings = getFilteredListings();
 
-  if (!listings.length) {
+  if (!state.listings.length) {
     container.innerHTML = `<div class="empty-state">No listings match your filters.</div>`;
     return;
   }
 
-  container.innerHTML = listings.map((listing) => {
-    const icon = CATEGORY_ICONS[listing.category] || "🚗";
-    return `
-      <article class="listing-card" onclick="openListingModal('${listing.id}')">
-        <div class="listing-image">${icon}</div>
-        <div class="listing-body">
-          <h3>${listing.year} ${listing.brandName} ${listing.modelName}</h3>
-          <p style="color: var(--muted); font-size: 0.88rem;">${listing.trim} · ${listing.color}</p>
-          <div class="listing-meta">
-            <span class="tag">${formatMileage(listing.mileage)}</span>
-            <span class="tag">${listing.transmission}</span>
-            <span class="tag">${listing.fuel}</span>
-          </div>
-          <div class="price-row">
-            <span class="price">${formatPrice(listing.price)}</span>
-            <button class="btn btn-secondary btn-sm" type="button">View Details</button>
-          </div>
+  container.innerHTML = state.listings.map((listing) => `
+    <article class="listing-card" onclick="openListingModal('${listing.id}')">
+      <img class="listing-image" src="${listing.imageUrl}" alt="${listing.brandName} ${listing.modelName}" loading="lazy">
+      <div class="listing-body">
+        <h3>${listing.year} ${listing.brandName} ${listing.modelName}</h3>
+        <p class="listing-subtitle">${listing.trim} · ${listing.color}</p>
+        <div class="listing-meta">
+          <span class="tag">${formatMileage(listing.mileage)}</span>
+          <span class="tag">${listing.transmission}</span>
+          <span class="tag">${listing.fuel}</span>
+          ${listing.isFavorite ? '<span class="tag tag-fav">♥ Saved</span>' : ""}
         </div>
-      </article>
-    `;
-  }).join("");
+        <div class="price-row">
+          <span class="price">${formatPrice(listing.price)}</span>
+          <button class="btn btn-secondary btn-sm" type="button">View Details</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
 }
 
 function renderSectionTitles() {
-  const brandsSection = document.getElementById("brands-section");
-  const modelsSection = document.getElementById("models-section");
-  const listingsSection = document.getElementById("listings-section");
-
-  brandsSection.classList.toggle("hidden", state.view !== "brands");
-  modelsSection.classList.toggle("hidden", state.view !== "models");
-  listingsSection.classList.toggle("hidden", state.view !== "listings");
+  document.getElementById("brands-section").classList.toggle("hidden", state.view !== "brands");
+  document.getElementById("models-section").classList.toggle("hidden", state.view !== "models");
+  document.getElementById("listings-section").classList.toggle("hidden", state.view !== "listings");
 
   if (state.view === "brands") {
     document.getElementById("section-heading").textContent = "Browse by Brand";
     document.getElementById("section-subheading").textContent =
       `${getFilteredBrands().length} brands available`;
   } else if (state.view === "models") {
-    document.getElementById("models-heading").textContent =
-      `${state.selectedBrand.name} Models`;
+    document.getElementById("models-heading").textContent = `${state.selectedBrand.name} Models`;
     document.getElementById("models-subheading").textContent =
       `${getFilteredModels().length} models · ${state.selectedBrand.country}`;
+  } else if (state.favoritesMode) {
+    document.getElementById("listings-heading").textContent = "My Favorites";
+    document.getElementById("listings-subheading").textContent =
+      `${state.listings.length} saved vehicles`;
   } else {
     const title = state.selectedModel
       ? `${state.selectedBrand.name} ${state.selectedModel.name}`
       : "All Listings";
     document.getElementById("listings-heading").textContent = title;
     document.getElementById("listings-subheading").textContent =
-      `${getFilteredListings().length} vehicles found`;
+      `${state.listings.length} vehicles found`;
   }
 }
 
@@ -414,14 +423,36 @@ function populateCategoryFilter() {
   const select = document.getElementById("filter-category");
   const current = state.filters.category;
   select.innerHTML = `<option value="">All Categories</option>` +
-    getCategories().map((c) => `<option value="${c}">${c}</option>`).join("");
+    state.categories.map((c) => `<option value="${c}">${c}</option>`).join("");
   select.value = current;
 }
 
-function bindFilters() {
+async function refresh() {
+  if (state.view === "listings") {
+    if (state.favoritesMode) {
+      await loadFavorites();
+    } else {
+      await loadListings();
+    }
+  }
+  render();
+}
+
+function render() {
+  renderBreadcrumb();
+  renderSectionTitles();
+  renderBrands();
+  renderModels();
+  renderListings();
+}
+
+function bindEvents() {
+  const rerender = () => refresh();
+
   document.getElementById("search-input").addEventListener("input", (e) => {
     state.filters.search = e.target.value;
-    render();
+    if (state.view === "listings") refresh();
+    else render();
   });
 
   document.getElementById("filter-brand").addEventListener("change", (e) => {
@@ -430,65 +461,100 @@ function bindFilters() {
       selectBrand(e.target.value);
       return;
     }
-    render();
+    refresh();
   });
 
-  document.getElementById("filter-category").addEventListener("change", (e) => {
-    state.filters.category = e.target.value;
-    render();
+  ["filter-category", "filter-min-price", "filter-max-price", "filter-sort"].forEach((id) => {
+    document.getElementById(id).addEventListener("change", (e) => {
+      const key = id.replace("filter-", "").replace("-price", "Price");
+      const map = {
+        category: "category",
+        minPrice: "minPrice",
+        maxPrice: "maxPrice",
+        sort: "sort",
+      };
+      state.filters[map[key] || key] = e.target.value;
+      refresh();
+    });
   });
 
   document.getElementById("filter-min-price").addEventListener("input", (e) => {
     state.filters.minPrice = e.target.value;
-    render();
+    refresh();
   });
-
   document.getElementById("filter-max-price").addEventListener("input", (e) => {
     state.filters.maxPrice = e.target.value;
-    render();
+    refresh();
   });
 
-  document.getElementById("filter-sort").addEventListener("change", (e) => {
-    state.filters.sort = e.target.value;
-    render();
+  document.getElementById("view-listings-btn").addEventListener("click", viewAllListings);
+  document.getElementById("login-btn").addEventListener("click", () => openAuthModal("login"));
+  document.getElementById("logout-btn").addEventListener("click", () => {
+    setAuth(null, null);
+    if (state.favoritesMode) goHome();
+    else refresh();
   });
 
-  document.getElementById("view-listings-btn").addEventListener("click", () => {
-    state.selectedModel = null;
-    state.view = "listings";
-    render();
+  document.getElementById("tab-login").addEventListener("click", () => openAuthModal("login"));
+  document.getElementById("tab-register").addEventListener("click", () => openAuthModal("register"));
+
+  document.getElementById("auth-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const errorEl = document.getElementById("auth-error");
+    errorEl.classList.add("hidden");
+
+    const email = document.getElementById("auth-email").value;
+    const password = document.getElementById("auth-password").value;
+    const name = document.getElementById("auth-name").value;
+
+    try {
+      const endpoint = state.authMode === "login" ? "/api/auth/login" : "/api/auth/register";
+      const body = state.authMode === "login"
+        ? { email, password }
+        : { name, email, password };
+
+      const data = await api(endpoint, { method: "POST", body: JSON.stringify(body) });
+      setAuth(data.token, data.user);
+      closeAuthModal();
+      refresh();
+    } catch (error) {
+      errorEl.textContent = error.message;
+      errorEl.classList.remove("hidden");
+    }
   });
 
   document.getElementById("modal-overlay-close").addEventListener("click", closeModal);
   document.getElementById("listing-modal").addEventListener("click", (e) => {
     if (e.target.id === "listing-modal") closeModal();
   });
-}
-
-function render() {
-  renderStats();
-  renderBreadcrumb();
-  renderSectionTitles();
-  renderBrands();
-  renderModels();
-  renderListings();
+  document.getElementById("auth-modal-close").addEventListener("click", closeAuthModal);
+  document.getElementById("auth-modal").addEventListener("click", (e) => {
+    if (e.target.id === "auth-modal") closeAuthModal();
+  });
 }
 
 async function init() {
   try {
-    const response = await fetch("/data/brands.json");
-    const data = await response.json();
-    state.brands = data.brands.sort((a, b) => a.name.localeCompare(b.name));
-    state.listings = generateListings(state.brands);
+    bindEvents();
+    await Promise.all([loadStats(), loadBrands(), loadCategories()]);
+
+    if (state.token) {
+      try {
+        const data = await api("/api/auth/me");
+        state.user = data.user;
+      } catch {
+        setAuth(null, null);
+      }
+    }
 
     populateBrandFilter();
     populateCategoryFilter();
-    bindFilters();
+    renderAuthUI();
     render();
   } catch (error) {
     document.body.innerHTML =
       `<div class="empty-state" style="margin: 4rem auto; width: min(600px, 90%);">
-        Failed to load vehicle data. Please refresh the page.
+        Failed to load application. Please refresh the page.
       </div>`;
     console.error(error);
   }
