@@ -3,120 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saif Cars</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-      color: #f8fafc;
-      min-height: 100vh;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .logo { font-size: 1.5rem; font-weight: 700; color: #38bdf8; }
-    nav a {
-      color: #cbd5e1;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-size: 0.95rem;
-    }
-    nav a:hover { color: #38bdf8; }
-    .hero {
-      text-align: center;
-      padding: 5rem 1.5rem 3rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      margin-bottom: 1rem;
-      line-height: 1.3;
-    }
-    .hero p {
-      color: #94a3b8;
-      font-size: 1.15rem;
-      margin-bottom: 2rem;
-      line-height: 1.7;
-    }
-    .cta {
-      display: inline-block;
-      background: #38bdf8;
-      color: #0f172a;
-      padding: 0.85rem 2rem;
-      border-radius: 999px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-    }
-    .card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 1.75rem;
-      transition: border-color 0.2s;
-    }
-    .card:hover { border-color: rgba(56, 189, 248, 0.4); }
-    .card h3 { color: #38bdf8; margin-bottom: 0.5rem; }
-    .card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: #64748b;
-      font-size: 0.85rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-  </style>
+  <title>Saif Cars — Browse Brands & Models</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <header>
-    <div class="logo">Saif Cars</div>
-    <nav>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo" onclick="goHome(); return false;">Saif<span>Cars</span></a>
+      <nav class="nav-links">
+        <a href="#" class="active" onclick="goHome(); return false;">Brands</a>
+        <a href="#" onclick="document.getElementById('view-listings-btn').click(); return false;">Inventory</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <section class="hero">
-    <h1>The Best Cars at the Best Prices</h1>
-    <p>Welcome to Saif Cars — your trusted platform for buying and selling vehicles with confidence and ease.</p>
-    <a class="cta" href="#contact">Get Started</a>
-  </section>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>Find Your Perfect Car</h1>
+        <p>
+          Explore a dynamic catalog of global automotive brands and models.
+          Search, filter, and browse live inventory listings instantly.
+        </p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <strong id="stat-brands">0</strong>
+          <span>Brands</span>
+        </div>
+        <div class="stat-card">
+          <strong id="stat-models">0</strong>
+          <span>Models</span>
+        </div>
+        <div class="stat-card">
+          <strong id="stat-listings">0</strong>
+          <span>Listings</span>
+        </div>
+      </div>
+    </section>
 
-  <section class="cards" id="services">
-    <div class="card">
-      <h3>🚗 Buy & Sell</h3>
-      <p>List your car for sale or browse a wide selection of available vehicles.</p>
-    </div>
-    <div class="card">
-      <h3>✅ Trusted Inspection</h3>
-      <p>Every vehicle undergoes a thorough inspection before listing to ensure quality.</p>
-    </div>
-    <div class="card">
-      <h3>💳 Flexible Financing</h3>
-      <p>Multiple financing options to fit your budget and needs.</p>
-    </div>
-  </section>
+    <section class="toolbar" aria-label="Search and filters">
+      <input id="search-input" type="search" placeholder="Search brands, models, colors..." autocomplete="off">
+      <select id="filter-brand" aria-label="Filter by brand"></select>
+      <select id="filter-category" aria-label="Filter by category"></select>
+      <input id="filter-min-price" type="number" placeholder="Min price" min="0" step="1000">
+      <input id="filter-max-price" type="number" placeholder="Max price" min="0" step="1000">
+    </section>
 
-  <footer id="contact">
+    <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom: 0.5rem;">
+      <select id="filter-sort" aria-label="Sort listings">
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="year-desc">Year: Newest First</option>
+        <option value="mileage-asc">Mileage: Lowest First</option>
+      </select>
+      <button id="view-listings-btn" class="btn btn-secondary" type="button">View All Listings</button>
+    </div>
+
+    <nav id="breadcrumb" class="breadcrumb" aria-label="Breadcrumb"></nav>
+
+    <section id="brands-section">
+      <div class="section-title">
+        <div>
+          <h2 id="section-heading">Browse by Brand</h2>
+          <p id="section-subheading">Loading brands...</p>
+        </div>
+      </div>
+      <div id="brands-grid" class="brands-grid"></div>
+    </section>
+
+    <section id="models-section" class="hidden">
+      <div class="section-title">
+        <div>
+          <h2 id="models-heading">Models</h2>
+          <p id="models-subheading"></p>
+        </div>
+      </div>
+      <div id="models-grid" class="models-grid"></div>
+    </section>
+
+    <section id="listings-section" class="hidden">
+      <div class="section-title">
+        <div>
+          <h2 id="listings-heading">Listings</h2>
+          <p id="listings-subheading"></p>
+        </div>
+      </div>
+      <div id="listings-grid" class="listings-grid"></div>
+    </section>
+  </main>
+
+  <footer id="contact" class="site-footer">
     &copy; 2026 Saif Cars — All rights reserved
   </footer>
+
+  <div id="listing-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Vehicle Details</h3>
+        <button id="modal-overlay-close" class="modal-close" type="button" aria-label="Close">&times;</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
 </body>
 </html>

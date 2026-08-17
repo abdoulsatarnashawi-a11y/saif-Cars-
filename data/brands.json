@@ -1,0 +1,659 @@
+{
+  "brands": [
+    {
+      "id": "toyota",
+      "name": "Toyota",
+      "country": "Japan",
+      "models": [
+        { "id": "camry", "name": "Camry", "category": "Sedan" },
+        { "id": "corolla", "name": "Corolla", "category": "Sedan" },
+        { "id": "rav4", "name": "RAV4", "category": "SUV" },
+        { "id": "highlander", "name": "Highlander", "category": "SUV" },
+        { "id": "4runner", "name": "4Runner", "category": "SUV" },
+        { "id": "tacoma", "name": "Tacoma", "category": "Truck" },
+        { "id": "tundra", "name": "Tundra", "category": "Truck" },
+        { "id": "prius", "name": "Prius", "category": "Hybrid" },
+        { "id": "sienna", "name": "Sienna", "category": "Van" },
+        { "id": "land-cruiser", "name": "Land Cruiser", "category": "SUV" },
+        { "id": "supra", "name": "GR Supra", "category": "Sports" },
+        { "id": "crown", "name": "Crown", "category": "Sedan" },
+        { "id": "bz4x", "name": "bZ4X", "category": "Electric" },
+        { "id": "sequoia", "name": "Sequoia", "category": "SUV" },
+        { "id": "venza", "name": "Venza", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "honda",
+      "name": "Honda",
+      "country": "Japan",
+      "models": [
+        { "id": "accord", "name": "Accord", "category": "Sedan" },
+        { "id": "civic", "name": "Civic", "category": "Sedan" },
+        { "id": "cr-v", "name": "CR-V", "category": "SUV" },
+        { "id": "pilot", "name": "Pilot", "category": "SUV" },
+        { "id": "hr-v", "name": "HR-V", "category": "SUV" },
+        { "id": "odyssey", "name": "Odyssey", "category": "Van" },
+        { "id": "passport", "name": "Passport", "category": "SUV" },
+        { "id": "ridgeline", "name": "Ridgeline", "category": "Truck" },
+        { "id": "prologue", "name": "Prologue", "category": "Electric" },
+        { "id": "fit", "name": "Fit", "category": "Hatchback" }
+      ]
+    },
+    {
+      "id": "nissan",
+      "name": "Nissan",
+      "country": "Japan",
+      "models": [
+        { "id": "altima", "name": "Altima", "category": "Sedan" },
+        { "id": "sentra", "name": "Sentra", "category": "Sedan" },
+        { "id": "rogue", "name": "Rogue", "category": "SUV" },
+        { "id": "pathfinder", "name": "Pathfinder", "category": "SUV" },
+        { "id": "murano", "name": "Murano", "category": "SUV" },
+        { "id": "frontier", "name": "Frontier", "category": "Truck" },
+        { "id": "titan", "name": "Titan", "category": "Truck" },
+        { "id": "ariya", "name": "Ariya", "category": "Electric" },
+        { "id": "leaf", "name": "Leaf", "category": "Electric" },
+        { "id": "z", "name": "Z", "category": "Sports" },
+        { "id": "kicks", "name": "Kicks", "category": "SUV" },
+        { "id": "armada", "name": "Armada", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "mazda",
+      "name": "Mazda",
+      "country": "Japan",
+      "models": [
+        { "id": "mazda3", "name": "Mazda3", "category": "Sedan" },
+        { "id": "mazda6", "name": "Mazda6", "category": "Sedan" },
+        { "id": "cx-5", "name": "CX-5", "category": "SUV" },
+        { "id": "cx-30", "name": "CX-30", "category": "SUV" },
+        { "id": "cx-50", "name": "CX-50", "category": "SUV" },
+        { "id": "cx-90", "name": "CX-90", "category": "SUV" },
+        { "id": "mx-5", "name": "MX-5 Miata", "category": "Sports" },
+        { "id": "cx-9", "name": "CX-9", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "subaru",
+      "name": "Subaru",
+      "country": "Japan",
+      "models": [
+        { "id": "outback", "name": "Outback", "category": "SUV" },
+        { "id": "forester", "name": "Forester", "category": "SUV" },
+        { "id": "crosstrek", "name": "Crosstrek", "category": "SUV" },
+        { "id": "ascent", "name": "Ascent", "category": "SUV" },
+        { "id": "impreza", "name": "Impreza", "category": "Sedan" },
+        { "id": "wrx", "name": "WRX", "category": "Sports" },
+        { "id": "brz", "name": "BRZ", "category": "Sports" },
+        { "id": "solterra", "name": "Solterra", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "lexus",
+      "name": "Lexus",
+      "country": "Japan",
+      "models": [
+        { "id": "es", "name": "ES", "category": "Sedan" },
+        { "id": "is", "name": "IS", "category": "Sedan" },
+        { "id": "ls", "name": "LS", "category": "Sedan" },
+        { "id": "rx", "name": "RX", "category": "SUV" },
+        { "id": "nx", "name": "NX", "category": "SUV" },
+        { "id": "gx", "name": "GX", "category": "SUV" },
+        { "id": "lx", "name": "LX", "category": "SUV" },
+        { "id": "ux", "name": "UX", "category": "SUV" },
+        { "id": "lc", "name": "LC", "category": "Sports" },
+        { "id": "rc", "name": "RC", "category": "Sports" },
+        { "id": "tx", "name": "TX", "category": "SUV" },
+        { "id": "rz", "name": "RZ", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "bmw",
+      "name": "BMW",
+      "country": "Germany",
+      "models": [
+        { "id": "3-series", "name": "3 Series", "category": "Sedan" },
+        { "id": "5-series", "name": "5 Series", "category": "Sedan" },
+        { "id": "7-series", "name": "7 Series", "category": "Sedan" },
+        { "id": "x1", "name": "X1", "category": "SUV" },
+        { "id": "x3", "name": "X3", "category": "SUV" },
+        { "id": "x5", "name": "X5", "category": "SUV" },
+        { "id": "x7", "name": "X7", "category": "SUV" },
+        { "id": "m3", "name": "M3", "category": "Sports" },
+        { "id": "m4", "name": "M4", "category": "Sports" },
+        { "id": "m5", "name": "M5", "category": "Sports" },
+        { "id": "i4", "name": "i4", "category": "Electric" },
+        { "id": "i7", "name": "i7", "category": "Electric" },
+        { "id": "ix", "name": "iX", "category": "Electric" },
+        { "id": "2-series", "name": "2 Series", "category": "Coupe" },
+        { "id": "4-series", "name": "4 Series", "category": "Coupe" },
+        { "id": "z4", "name": "Z4", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "mercedes-benz",
+      "name": "Mercedes-Benz",
+      "country": "Germany",
+      "models": [
+        { "id": "c-class", "name": "C-Class", "category": "Sedan" },
+        { "id": "e-class", "name": "E-Class", "category": "Sedan" },
+        { "id": "s-class", "name": "S-Class", "category": "Sedan" },
+        { "id": "a-class", "name": "A-Class", "category": "Sedan" },
+        { "id": "gla", "name": "GLA", "category": "SUV" },
+        { "id": "glc", "name": "GLC", "category": "SUV" },
+        { "id": "gle", "name": "GLE", "category": "SUV" },
+        { "id": "gls", "name": "GLS", "category": "SUV" },
+        { "id": "g-class", "name": "G-Class", "category": "SUV" },
+        { "id": "eqs", "name": "EQS", "category": "Electric" },
+        { "id": "eqe", "name": "EQE", "category": "Electric" },
+        { "id": "eqb", "name": "EQB", "category": "Electric" },
+        { "id": "amg-gt", "name": "AMG GT", "category": "Sports" },
+        { "id": "sl", "name": "SL", "category": "Sports" },
+        { "id": "sprinter", "name": "Sprinter", "category": "Van" }
+      ]
+    },
+    {
+      "id": "audi",
+      "name": "Audi",
+      "country": "Germany",
+      "models": [
+        { "id": "a3", "name": "A3", "category": "Sedan" },
+        { "id": "a4", "name": "A4", "category": "Sedan" },
+        { "id": "a6", "name": "A6", "category": "Sedan" },
+        { "id": "a8", "name": "A8", "category": "Sedan" },
+        { "id": "q3", "name": "Q3", "category": "SUV" },
+        { "id": "q5", "name": "Q5", "category": "SUV" },
+        { "id": "q7", "name": "Q7", "category": "SUV" },
+        { "id": "q8", "name": "Q8", "category": "SUV" },
+        { "id": "e-tron", "name": "e-tron", "category": "Electric" },
+        { "id": "e-tron-gt", "name": "e-tron GT", "category": "Electric" },
+        { "id": "q4-e-tron", "name": "Q4 e-tron", "category": "Electric" },
+        { "id": "rs6", "name": "RS6 Avant", "category": "Sports" },
+        { "id": "r8", "name": "R8", "category": "Sports" },
+        { "id": "tt", "name": "TT", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "volkswagen",
+      "name": "Volkswagen",
+      "country": "Germany",
+      "models": [
+        { "id": "jetta", "name": "Jetta", "category": "Sedan" },
+        { "id": "passat", "name": "Passat", "category": "Sedan" },
+        { "id": "golf", "name": "Golf", "category": "Hatchback" },
+        { "id": "tiguan", "name": "Tiguan", "category": "SUV" },
+        { "id": "atlas", "name": "Atlas", "category": "SUV" },
+        { "id": "taos", "name": "Taos", "category": "SUV" },
+        { "id": "id4", "name": "ID.4", "category": "Electric" },
+        { "id": "id-buzz", "name": "ID. Buzz", "category": "Electric" },
+        { "id": "arteon", "name": "Arteon", "category": "Sedan" }
+      ]
+    },
+    {
+      "id": "porsche",
+      "name": "Porsche",
+      "country": "Germany",
+      "models": [
+        { "id": "911", "name": "911", "category": "Sports" },
+        { "id": "cayenne", "name": "Cayenne", "category": "SUV" },
+        { "id": "macan", "name": "Macan", "category": "SUV" },
+        { "id": "panamera", "name": "Panamera", "category": "Sedan" },
+        { "id": "taycan", "name": "Taycan", "category": "Electric" },
+        { "id": "boxster", "name": "718 Boxster", "category": "Sports" },
+        { "id": "cayman", "name": "718 Cayman", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "ford",
+      "name": "Ford",
+      "country": "USA",
+      "models": [
+        { "id": "f-150", "name": "F-150", "category": "Truck" },
+        { "id": "f-250", "name": "F-250 Super Duty", "category": "Truck" },
+        { "id": "ranger", "name": "Ranger", "category": "Truck" },
+        { "id": "mustang", "name": "Mustang", "category": "Sports" },
+        { "id": "mustang-mach-e", "name": "Mustang Mach-E", "category": "Electric" },
+        { "id": "explorer", "name": "Explorer", "category": "SUV" },
+        { "id": "escape", "name": "Escape", "category": "SUV" },
+        { "id": "bronco", "name": "Bronco", "category": "SUV" },
+        { "id": "edge", "name": "Edge", "category": "SUV" },
+        { "id": "expedition", "name": "Expedition", "category": "SUV" },
+        { "id": "maverick", "name": "Maverick", "category": "Truck" },
+        { "id": "transit", "name": "Transit", "category": "Van" }
+      ]
+    },
+    {
+      "id": "chevrolet",
+      "name": "Chevrolet",
+      "country": "USA",
+      "models": [
+        { "id": "silverado", "name": "Silverado", "category": "Truck" },
+        { "id": "colorado", "name": "Colorado", "category": "Truck" },
+        { "id": "camaro", "name": "Camaro", "category": "Sports" },
+        { "id": "corvette", "name": "Corvette", "category": "Sports" },
+        { "id": "tahoe", "name": "Tahoe", "category": "SUV" },
+        { "id": "suburban", "name": "Suburban", "category": "SUV" },
+        { "id": "equinox", "name": "Equinox", "category": "SUV" },
+        { "id": "traverse", "name": "Traverse", "category": "SUV" },
+        { "id": "blazer", "name": "Blazer", "category": "SUV" },
+        { "id": "trailblazer", "name": "Trailblazer", "category": "SUV" },
+        { "id": "bolt-ev", "name": "Bolt EV", "category": "Electric" },
+        { "id": "malibu", "name": "Malibu", "category": "Sedan" }
+      ]
+    },
+    {
+      "id": "gmc",
+      "name": "GMC",
+      "country": "USA",
+      "models": [
+        { "id": "sierra", "name": "Sierra", "category": "Truck" },
+        { "id": "canyon", "name": "Canyon", "category": "Truck" },
+        { "id": "yukon", "name": "Yukon", "category": "SUV" },
+        { "id": "acadia", "name": "Acadia", "category": "SUV" },
+        { "id": "terrain", "name": "Terrain", "category": "SUV" },
+        { "id": "hummer-ev", "name": "Hummer EV", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "cadillac",
+      "name": "Cadillac",
+      "country": "USA",
+      "models": [
+        { "id": "escalade", "name": "Escalade", "category": "SUV" },
+        { "id": "xt5", "name": "XT5", "category": "SUV" },
+        { "id": "xt6", "name": "XT6", "category": "SUV" },
+        { "id": "xt4", "name": "XT4", "category": "SUV" },
+        { "id": "ct4", "name": "CT4", "category": "Sedan" },
+        { "id": "ct5", "name": "CT5", "category": "Sedan" },
+        { "id": "lyriq", "name": "Lyriq", "category": "Electric" },
+        { "id": "celestiq", "name": "Celestiq", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "jeep",
+      "name": "Jeep",
+      "country": "USA",
+      "models": [
+        { "id": "wrangler", "name": "Wrangler", "category": "SUV" },
+        { "id": "grand-cherokee", "name": "Grand Cherokee", "category": "SUV" },
+        { "id": "cherokee", "name": "Cherokee", "category": "SUV" },
+        { "id": "compass", "name": "Compass", "category": "SUV" },
+        { "id": "renegade", "name": "Renegade", "category": "SUV" },
+        { "id": "gladiator", "name": "Gladiator", "category": "Truck" },
+        { "id": "wagoneer", "name": "Wagoneer", "category": "SUV" },
+        { "id": "grand-wagoneer", "name": "Grand Wagoneer", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "ram",
+      "name": "Ram",
+      "country": "USA",
+      "models": [
+        { "id": "1500", "name": "1500", "category": "Truck" },
+        { "id": "2500", "name": "2500", "category": "Truck" },
+        { "id": "3500", "name": "3500", "category": "Truck" },
+        { "id": "promaster", "name": "ProMaster", "category": "Van" }
+      ]
+    },
+    {
+      "id": "dodge",
+      "name": "Dodge",
+      "country": "USA",
+      "models": [
+        { "id": "charger", "name": "Charger", "category": "Sedan" },
+        { "id": "challenger", "name": "Challenger", "category": "Sports" },
+        { "id": "durango", "name": "Durango", "category": "SUV" },
+        { "id": "hornet", "name": "Hornet", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "tesla",
+      "name": "Tesla",
+      "country": "USA",
+      "models": [
+        { "id": "model-3", "name": "Model 3", "category": "Electric" },
+        { "id": "model-y", "name": "Model Y", "category": "Electric" },
+        { "id": "model-s", "name": "Model S", "category": "Electric" },
+        { "id": "model-x", "name": "Model X", "category": "Electric" },
+        { "id": "cybertruck", "name": "Cybertruck", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "lincoln",
+      "name": "Lincoln",
+      "country": "USA",
+      "models": [
+        { "id": "navigator", "name": "Navigator", "category": "SUV" },
+        { "id": "aviator", "name": "Aviator", "category": "SUV" },
+        { "id": "corsair", "name": "Corsair", "category": "SUV" },
+        { "id": "nautilus", "name": "Nautilus", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "buick",
+      "name": "Buick",
+      "country": "USA",
+      "models": [
+        { "id": "enclave", "name": "Enclave", "category": "SUV" },
+        { "id": "encore-gx", "name": "Encore GX", "category": "SUV" },
+        { "id": "envision", "name": "Envision", "category": "SUV" },
+        { "id": "envista", "name": "Envista", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "hyundai",
+      "name": "Hyundai",
+      "country": "South Korea",
+      "models": [
+        { "id": "elantra", "name": "Elantra", "category": "Sedan" },
+        { "id": "sonata", "name": "Sonata", "category": "Sedan" },
+        { "id": "tucson", "name": "Tucson", "category": "SUV" },
+        { "id": "santa-fe", "name": "Santa Fe", "category": "SUV" },
+        { "id": "palisade", "name": "Palisade", "category": "SUV" },
+        { "id": "kona", "name": "Kona", "category": "SUV" },
+        { "id": "ioniq-5", "name": "IONIQ 5", "category": "Electric" },
+        { "id": "ioniq-6", "name": "IONIQ 6", "category": "Electric" },
+        { "id": "venue", "name": "Venue", "category": "SUV" },
+        { "id": "accent", "name": "Accent", "category": "Sedan" }
+      ]
+    },
+    {
+      "id": "kia",
+      "name": "Kia",
+      "country": "South Korea",
+      "models": [
+        { "id": "k5", "name": "K5", "category": "Sedan" },
+        { "id": "forte", "name": "Forte", "category": "Sedan" },
+        { "id": "sportage", "name": "Sportage", "category": "SUV" },
+        { "id": "sorento", "name": "Sorento", "category": "SUV" },
+        { "id": "telluride", "name": "Telluride", "category": "SUV" },
+        { "id": "seltos", "name": "Seltos", "category": "SUV" },
+        { "id": "soul", "name": "Soul", "category": "Hatchback" },
+        { "id": "ev6", "name": "EV6", "category": "Electric" },
+        { "id": "ev9", "name": "EV9", "category": "Electric" },
+        { "id": "carnival", "name": "Carnival", "category": "Van" },
+        { "id": "stinger", "name": "Stinger", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "genesis",
+      "name": "Genesis",
+      "country": "South Korea",
+      "models": [
+        { "id": "g70", "name": "G70", "category": "Sedan" },
+        { "id": "g80", "name": "G80", "category": "Sedan" },
+        { "id": "g90", "name": "G90", "category": "Sedan" },
+        { "id": "gv70", "name": "GV70", "category": "SUV" },
+        { "id": "gv80", "name": "GV80", "category": "SUV" },
+        { "id": "gv60", "name": "GV60", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "volvo",
+      "name": "Volvo",
+      "country": "Sweden",
+      "models": [
+        { "id": "s60", "name": "S60", "category": "Sedan" },
+        { "id": "s90", "name": "S90", "category": "Sedan" },
+        { "id": "v60", "name": "V60", "category": "Wagon" },
+        { "id": "v90", "name": "V90", "category": "Wagon" },
+        { "id": "xc40", "name": "XC40", "category": "SUV" },
+        { "id": "xc60", "name": "XC60", "category": "SUV" },
+        { "id": "xc90", "name": "XC90", "category": "SUV" },
+        { "id": "c40", "name": "C40 Recharge", "category": "Electric" },
+        { "id": "ex30", "name": "EX30", "category": "Electric" },
+        { "id": "ex90", "name": "EX90", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "land-rover",
+      "name": "Land Rover",
+      "country": "UK",
+      "models": [
+        { "id": "range-rover", "name": "Range Rover", "category": "SUV" },
+        { "id": "range-rover-sport", "name": "Range Rover Sport", "category": "SUV" },
+        { "id": "range-rover-velar", "name": "Range Rover Velar", "category": "SUV" },
+        { "id": "range-rover-evoque", "name": "Range Rover Evoque", "category": "SUV" },
+        { "id": "defender", "name": "Defender", "category": "SUV" },
+        { "id": "discovery", "name": "Discovery", "category": "SUV" },
+        { "id": "discovery-sport", "name": "Discovery Sport", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "jaguar",
+      "name": "Jaguar",
+      "country": "UK",
+      "models": [
+        { "id": "f-pace", "name": "F-PACE", "category": "SUV" },
+        { "id": "e-pace", "name": "E-PACE", "category": "SUV" },
+        { "id": "i-pace", "name": "I-PACE", "category": "Electric" },
+        { "id": "f-type", "name": "F-TYPE", "category": "Sports" },
+        { "id": "xe", "name": "XE", "category": "Sedan" },
+        { "id": "xf", "name": "XF", "category": "Sedan" }
+      ]
+    },
+    {
+      "id": "mini",
+      "name": "MINI",
+      "country": "UK",
+      "models": [
+        { "id": "cooper", "name": "Cooper", "category": "Hatchback" },
+        { "id": "countryman", "name": "Countryman", "category": "SUV" },
+        { "id": "clubman", "name": "Clubman", "category": "Wagon" },
+        { "id": "convertible", "name": "Convertible", "category": "Convertible" },
+        { "id": "electric", "name": "Electric", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "ferrari",
+      "name": "Ferrari",
+      "country": "Italy",
+      "models": [
+        { "id": "296-gtb", "name": "296 GTB", "category": "Sports" },
+        { "id": "sf90", "name": "SF90 Stradale", "category": "Sports" },
+        { "id": "roma", "name": "Roma", "category": "Sports" },
+        { "id": "portofino", "name": "Portofino", "category": "Sports" },
+        { "id": "purosangue", "name": "Purosangue", "category": "SUV" },
+        { "id": "812", "name": "812 Superfast", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "lamborghini",
+      "name": "Lamborghini",
+      "country": "Italy",
+      "models": [
+        { "id": "huracan", "name": "Huracán", "category": "Sports" },
+        { "id": "revuelto", "name": "Revuelto", "category": "Sports" },
+        { "id": "urus", "name": "Urus", "category": "SUV" },
+        { "id": "aventador", "name": "Aventador", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "maserati",
+      "name": "Maserati",
+      "country": "Italy",
+      "models": [
+        { "id": "ghibli", "name": "Ghibli", "category": "Sedan" },
+        { "id": "quattroporte", "name": "Quattroporte", "category": "Sedan" },
+        { "id": "levante", "name": "Levante", "category": "SUV" },
+        { "id": "grecale", "name": "Grecale", "category": "SUV" },
+        { "id": "mc20", "name": "MC20", "category": "Sports" },
+        { "id": "gran-turismo", "name": "GranTurismo", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "aston-martin",
+      "name": "Aston Martin",
+      "country": "UK",
+      "models": [
+        { "id": "db11", "name": "DB11", "category": "Sports" },
+        { "id": "db12", "name": "DB12", "category": "Sports" },
+        { "id": "vantage", "name": "Vantage", "category": "Sports" },
+        { "id": "dbs", "name": "DBS", "category": "Sports" },
+        { "id": "dbx", "name": "DBX", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "bentley",
+      "name": "Bentley",
+      "country": "UK",
+      "models": [
+        { "id": "continental-gt", "name": "Continental GT", "category": "Sports" },
+        { "id": "flying-spur", "name": "Flying Spur", "category": "Sedan" },
+        { "id": "bentayga", "name": "Bentayga", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "rolls-royce",
+      "name": "Rolls-Royce",
+      "country": "UK",
+      "models": [
+        { "id": "phantom", "name": "Phantom", "category": "Sedan" },
+        { "id": "ghost", "name": "Ghost", "category": "Sedan" },
+        { "id": "cullinan", "name": "Cullinan", "category": "SUV" },
+        { "id": "wraith", "name": "Wraith", "category": "Coupe" },
+        { "id": "spectre", "name": "Spectre", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "mitsubishi",
+      "name": "Mitsubishi",
+      "country": "Japan",
+      "models": [
+        { "id": "outlander", "name": "Outlander", "category": "SUV" },
+        { "id": "eclipse-cross", "name": "Eclipse Cross", "category": "SUV" },
+        { "id": "mirage", "name": "Mirage", "category": "Hatchback" },
+        { "id": "outlander-sport", "name": "Outlander Sport", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "acura",
+      "name": "Acura",
+      "country": "Japan",
+      "models": [
+        { "id": "mdx", "name": "MDX", "category": "SUV" },
+        { "id": "rdx", "name": "RDX", "category": "SUV" },
+        { "id": "tlx", "name": "TLX", "category": "Sedan" },
+        { "id": "integra", "name": "Integra", "category": "Sedan" },
+        { "id": "zdx", "name": "ZDX", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "infiniti",
+      "name": "Infiniti",
+      "country": "Japan",
+      "models": [
+        { "id": "qx80", "name": "QX80", "category": "SUV" },
+        { "id": "qx60", "name": "QX60", "category": "SUV" },
+        { "id": "qx55", "name": "QX55", "category": "SUV" },
+        { "id": "qx50", "name": "QX50", "category": "SUV" },
+        { "id": "q50", "name": "Q50", "category": "Sedan" }
+      ]
+    },
+    {
+      "id": "alfa-romeo",
+      "name": "Alfa Romeo",
+      "country": "Italy",
+      "models": [
+        { "id": "giulia", "name": "Giulia", "category": "Sedan" },
+        { "id": "stelvio", "name": "Stelvio", "category": "SUV" },
+        { "id": "tonale", "name": "Tonale", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "fiat",
+      "name": "Fiat",
+      "country": "Italy",
+      "models": [
+        { "id": "500", "name": "500", "category": "Hatchback" },
+        { "id": "500e", "name": "500e", "category": "Electric" },
+        { "id": "500x", "name": "500X", "category": "SUV" }
+      ]
+    },
+    {
+      "id": "peugeot",
+      "name": "Peugeot",
+      "country": "France",
+      "models": [
+        { "id": "208", "name": "208", "category": "Hatchback" },
+        { "id": "308", "name": "308", "category": "Hatchback" },
+        { "id": "3008", "name": "3008", "category": "SUV" },
+        { "id": "5008", "name": "5008", "category": "SUV" },
+        { "id": "e-208", "name": "e-208", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "renault",
+      "name": "Renault",
+      "country": "France",
+      "models": [
+        { "id": "clio", "name": "Clio", "category": "Hatchback" },
+        { "id": "megane", "name": "Megane", "category": "Hatchback" },
+        { "id": "captur", "name": "Captur", "category": "SUV" },
+        { "id": "koleos", "name": "Koleos", "category": "SUV" },
+        { "id": "zoe", "name": "Zoe", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "citroen",
+      "name": "Citroën",
+      "country": "France",
+      "models": [
+        { "id": "c3", "name": "C3", "category": "Hatchback" },
+        { "id": "c4", "name": "C4", "category": "Hatchback" },
+        { "id": "c5-aircross", "name": "C5 Aircross", "category": "SUV" },
+        { "id": "e-c4", "name": "ë-C4", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "lucid",
+      "name": "Lucid",
+      "country": "USA",
+      "models": [
+        { "id": "air", "name": "Air", "category": "Electric" },
+        { "id": "gravity", "name": "Gravity", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "rivian",
+      "name": "Rivian",
+      "country": "USA",
+      "models": [
+        { "id": "r1t", "name": "R1T", "category": "Electric" },
+        { "id": "r1s", "name": "R1S", "category": "Electric" },
+        { "id": "r2", "name": "R2", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "polestar",
+      "name": "Polestar",
+      "country": "Sweden",
+      "models": [
+        { "id": "polestar-2", "name": "Polestar 2", "category": "Electric" },
+        { "id": "polestar-3", "name": "Polestar 3", "category": "Electric" },
+        { "id": "polestar-4", "name": "Polestar 4", "category": "Electric" }
+      ]
+    },
+    {
+      "id": "mclaren",
+      "name": "McLaren",
+      "country": "UK",
+      "models": [
+        { "id": "720s", "name": "720S", "category": "Sports" },
+        { "id": "750s", "name": "750S", "category": "Sports" },
+        { "id": "artura", "name": "Artura", "category": "Sports" },
+        { "id": "gt", "name": "GT", "category": "Sports" }
+      ]
+    },
+    {
+      "id": "bugatti",
+      "name": "Bugatti",
+      "country": "France",
+      "models": [
+        { "id": "chiron", "name": "Chiron", "category": "Sports" },
+        { "id": "mistral", "name": "Mistral", "category": "Sports" },
+        { "id": "bolide", "name": "Bolide", "category": "Sports" }
+      ]
+    }
+  ]
+}
