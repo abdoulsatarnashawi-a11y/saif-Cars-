@@ -195,6 +195,18 @@ function viewAllListings() {
   refresh();
 }
 
+function runSearch() {
+  const input = document.getElementById("search-input");
+  state.filters.search = input.value;
+  if (state.filters.search.trim()) {
+    state.selectedBrand = null;
+    state.selectedModel = null;
+    state.favoritesMode = false;
+    state.view = "listings";
+  }
+  refresh();
+}
+
 function viewFavorites() {
   if (!state.user) {
     openAuthModal("login");
@@ -454,6 +466,15 @@ function bindEvents() {
     if (state.view === "listings") refresh();
     else render();
   });
+
+  document.getElementById("search-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      runSearch();
+    }
+  });
+
+  document.getElementById("search-btn").addEventListener("click", runSearch);
 
   document.getElementById("filter-brand").addEventListener("change", (e) => {
     state.filters.brand = e.target.value;
