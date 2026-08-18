@@ -49,8 +49,18 @@
       </div>
     </section>
 
-    <section class="toolbar" aria-label="Search and filters">
-      <input id="search-input" type="search" placeholder="Search brands, models, colors..." autocomplete="off">
+    <section class="hero-search" aria-label="Search">
+      <div class="search-bar">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input id="search-input" type="search" placeholder="Search brands, models, colors, trim..." autocomplete="off">
+        <button id="search-btn" class="btn btn-primary search-btn" type="button">Search</button>
+      </div>
+    </section>
+
+    <section class="toolbar" aria-label="Filters">
       <select id="filter-brand" aria-label="Filter by brand"></select>
       <select id="filter-category" aria-label="Filter by category"></select>
       <input id="filter-min-price" type="number" placeholder="Min price" min="0" step="1000">
